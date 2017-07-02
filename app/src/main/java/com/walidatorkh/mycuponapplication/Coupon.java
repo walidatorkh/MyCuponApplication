@@ -9,13 +9,17 @@ public class Coupon {
     private String title;
     private String startDate;
     private String endDate;
+    private double price;
 
-    public Coupon(String image, String title, String startDate, String endDate) {
-        this.image = image;
-        this.title = title;
-        this.startDate = startDate;
-        this.endDate = endDate;
+    public Coupon(String image, String title, String startDate, String endDate, double price) {
+        setImage(image);
+        setTitle(title);
+        setStartDate(startDate);
+        setEndDate(endDate);
+        setPrice(price);
     }
+
+
 
     public String getImage() {
 
@@ -48,5 +52,12 @@ public class Coupon {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+    public double getPrice() {
+        return price;
     }
 }
