@@ -14,19 +14,26 @@ import java.util.ArrayList;
 
 public class MainActivity extends ListActivity implements TextDownloader.Callbacks{
 
-    private ArrayList<Coupon> coupons = new ArrayList<>();
+    private ArrayList<Coupon> coupons;
 
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+    }
 //        for (int i = 0; i < 100; i++) {
 //            Coupon c = new Coupon("coupon.jpg", "Coupon Title", "6/2/2017", "4/10/2017", 10.58);
 //            coupons.add(c);
 //        }
 //        CouponsAdapter adapter = new CouponsAdapter(this, coupons);
 //        setListAdapter(adapter);
+//        TextDownloader textDownloader = new TextDownloader(this);
+//        textDownloader.execute("https://jsonplaceholder.typicode.com/photos");
+
+
+
+    protected void onResume() {
+        super.onResume();
         TextDownloader textDownloader = new TextDownloader(this);
         textDownloader.execute("https://jsonplaceholder.typicode.com/photos");
     }
@@ -42,11 +49,14 @@ public class MainActivity extends ListActivity implements TextDownloader.Callbac
 
     public void onSuccess(String downloadedText) {
         try {
+            coupons = new ArrayList<>();
+
             JSONArray jsonArray = new JSONArray(downloadedText);
             for ( int i =0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String thumbnailUrl = jsonObject.getString("thumbnailUrl");
                 String title = jsonObject.getString("title");
-                Coupon coupon = new Coupon("", title,"","", 0);
+                Coupon coupon = new Coupon(thumbnailUrl, title,"","", 0);
                 coupons.add(coupon);
             }
             CouponsAdapter adapter = new CouponsAdapter(this, coupons);
